@@ -9,6 +9,8 @@ export const Single = props => {
 	const params = useParams();
 
 	return (
+		<div>
+			<h1>Congrats you log in successfully!! :D </h1>
 		<div className="jumbotron">
 			<h1 className="display-4">This will show the demo element: {store.demo[params.theid].title}</h1>
 			<img src={rigoImageUrl} />
@@ -16,9 +18,10 @@ export const Single = props => {
 
 			<Link to="/">
 				<span className="btn btn-primary btn-lg" href="#" role="button">
-					Back home
+					Log out
 				</span>
 			</Link>
+		</div>
 		</div>
 	);
 };

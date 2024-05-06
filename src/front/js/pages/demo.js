@@ -8,6 +8,18 @@ export const Demo = () => {
 
 	return (
 		<div className="container">
+			<h1>Sign Up</h1>
+				<form>
+					<label>
+						Email:
+						<input type="text" name="name" />
+					</label>
+					<label>
+						Password:
+						<input type="password" name="name" />
+					</label>
+					<button> Submit </button>
+				</form>
 			<ul className="list-group">
 				{store.demo.map((item, index) => {
 					return (
@@ -34,7 +46,7 @@ export const Demo = () => {
 			</ul>
 			<br />
 			<Link to="/">
-				<button className="btn btn-primary">Back home</button>
+				<button className="btn btn-primary">Back Homet</button>
 			</Link>
 		</div>
 	);
