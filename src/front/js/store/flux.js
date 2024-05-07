@@ -44,7 +44,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 			};
 			try{
-				const response = await fetch('https://solid-waddle-wrr5rvjgppx735444-3001.app.github.dev/api/login', opts)
+				const response = await fetch('https://solid-waddle-wrr5rvjgppx735444-3001.app.github.dev/api/token', opts)
 				if (response.status !== 200){ 
 					alert("There is an error");
 					return false;
@@ -57,20 +57,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 			}	
 			catch(error){
 				console.log("There is a error")
-			}
-		},		
-
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
 				}
+			},		
+
+			getMessage: () => {
+				const store = getStore();
+				const opts = {
+					headers: {
+						"Authorization": "Bearer " + store.token 
+					}
+				}
+
+				fetch("https://solid-waddle-wrr5rvjgppx735444-3001.app.github.dev/api/hello", opts)
+					.then(response => response.json())
+					.then(data => setStore({ message: data.message}))
+					.catch(error => console.log("Error loading message from backend", error));
 			},
 
 			changeColor: (index, color) => {

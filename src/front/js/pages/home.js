@@ -1,26 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
+	useEffect(() => {
+		if(store.token && store.token != "" && store.token != undefined) actions.getMessage();
+	}, [store.token])
+
 	return (
 		<div className="text-center mt-5">
 			<h1>Sign Up</h1>
-				<form>
-					<label>
-						Email:
-						<input type="text" name="name" />
-					</label>
-					<label>
-						Password:
-						<input type="password" name="name" />
-					</label>
-					<button> Submit </button>
-				</form>
+				
 			<div className="alert alert-info">
-				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
+				{store.message}
 			</div>
 			<p>
 				This boilerplate comes with lots of documentation:{" "}
