@@ -1,16 +1,17 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route} from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
-import { Home } from "./pages/home";
-import { Login } from "./pages/login";
-
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
-import injectContext from "./store/appContext";
-import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
+import { Home } from "./pages/home.js";
+import { Demo } from "./pages/demo.js";
+import { Single } from "./pages/single.js";
+import injectContext from "./store/appContext.js";
+import { Login } from "./pages/login.js";
+import { Navbar } from "./component/navbar.js";
+import { Footer } from "./component/footer.js";
+import { Private } from "./pages/private.js";
+import { Register } from "./pages/register.js";
 
 //create your first component
 const Layout = () => {
@@ -28,6 +29,8 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Login />} path="/login" />
+                        <Route element={<Register />} path="/register" />
+                        <Route element={<Private />} path="/private" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />

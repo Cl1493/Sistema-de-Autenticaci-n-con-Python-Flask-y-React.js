@@ -11,33 +11,44 @@ from flask_cors import CORS
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
-
+from flask_cors import CORS
 
 api = Blueprint('api', __name__)
 
-
+CORS(api)
 
 # Create a route to authenticate your users and return JWTs. The
 # create_access_token() function is used to actually generate the JWT.
-@api.route("/token", methods=["POST"])
-def create_token():
-    email = request.json.get("email", None)
-    password = request.json.get("password", None)
-    if email != "test" or password != "test":
-        return jsonify({"msg": "Bad username or password"}), 401
-
-    access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token)
-
-
-@api.route("/hello", methods=["GET"])
-@jwt_required{}
-def get_hello():
-    
-    email = get_jwt_identity()
-    dictionary = {
-        "message": "You are in" + email
+@api.route('/signup', methods=['POST'])
+def handle_signup():
+    request_body = request.get_json()
+   
+    email = request_body.get('email')
+    password = request_body.get('password')
+  
+    user = User(email=email, password=password)
+    db.session.add(user)
+    db.session.commit()
+    reponse_body = {
+        'msg': 'User created successfully',
+        'user': user.serialize()
     }
-    return jsonify(dictionary)
 
+
+    return jsonify(reponse_body), 200
+
+
+ 
+
+@api.route('/login', methods=['POST'])
+def handle_login():
+    request_body = request.get_json()
+    email = request_body.get('email')
+    password = request_body.get('password')
+    user = User.query.filter_by(email=email, password=password).first()
+    if user is None:
+        return jsonify({'msg': 'Error en el email o password'}), 401
+   
+    access_token = create_access_token(identity=email)
+    return jsonify(access_token=access_token), 200
 
